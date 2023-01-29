@@ -10,71 +10,82 @@ import java.util.List;
 @Repository
 public class MovieRepository {
 
-  HashMap<String,Movie> movieMap= new HashMap<>();
-  HashMap<String,Director> dirMap=new HashMap<>();
-  HashMap<String, List<String>> dirMovieMap= new HashMap<>();
-
-
+    HashMap<String,Movie> movies=new HashMap<>();
+    HashMap<String,Director> directors=new HashMap<>();
+    HashMap<String,List<String>> pair=new HashMap<>();
 
     public String addMovie(Movie movie){
-        movieMap.put(movie.getName(),movie);
-        return "Successfully added movie";
+        String mv=movie.getName();
+        movies.put(mv,movie);
+        return "Successfully Added Movie";
     }
     public String addDirector(Director director){
-       dirMap.put(director.getName(),director);
-       return "Successfully added director";
+        directors.put(director.getName(),director);
+        return "Successfully Added Director";
     }
 
-    public String addMovieDirectorPair(String director,String movie) {
-        if (dirMap.containsKey(director) && movieMap.containsKey(movie)) {
-            if (dirMovieMap.containsKey(director)) dirMovieMap.get(director).add(movie);
+    public Movie getmovie(String name){
+        return movies.get(name);
+    }
+    public Director getdirecor(String name){
+        return directors.get(name);
+    }
+
+    public String addpair(String mvName,String dirName){
+        if(movies.containsKey(mvName) && directors.containsKey(dirName)){
+            if(pair.containsKey(dirName))
+                pair.get(dirName).add(mvName);
             else {
-                List<String> currentMovies = new ArrayList<>();
-
-                currentMovies.add(movie);
-                dirMovieMap.put(director, currentMovies);
+                ArrayList<String> mv=new ArrayList<>();
+                mv.add(mvName);
+                pair.put(dirName,mv);
             }
-            return "Successfully added pair";
         }
-       return "Movie or Director does not exist";
-    }
-    public Movie getMovieByName(String name){
-            return movieMap.get(name);
-    }
-    public Director getDirectorByName(String name){
-            return dirMap.get(name);
-    }
-    public List<String> getMoviesByDirectorName(String director){
-        List<String> list= new ArrayList<>();
-        if(dirMovieMap.containsKey(director)) list=dirMovieMap.get(director);
-        return list;
-    }
-    public List<String> findAllMovies(){
-        return new ArrayList<>(movieMap.keySet());
+        return "SUCCESSFULLY PAIRED";
     }
 
-    public String deleteDirectorByName(String director){
-        if(dirMap.containsKey(director)) {
+    public List getAllMovies(){
+        ArrayList<String> mvs=new ArrayList<>();
+        for(String s:movies.keySet())
+            mvs.add(s);
 
-            if (dirMovieMap.containsKey(director)) {
-                List<String> movies = dirMovieMap.get(director);
-                for (String movie : movies) {
-                        movieMap.remove(movie);
+        return mvs;
+    }
+
+    public String deleteDirectorByName(String dirName){
+        if(directors.containsKey(dirName))
+        {
+            if(pair.containsKey(dirName))
+            {
+                List<String> movies1=pair.get(dirName);
+                for(String mv:movies1){
+                    movies.remove(mv);
                 }
-                dirMovieMap.remove(director);
+                pair.remove(dirName);
             }
-            dirMap.remove(director);
-            return "Successfully deleted";
+            directors.remove(dirName);
+            return "SUCCESSFULLY DELETED ";
         }
         return null;
     }
+
     public String deleteAllDirectors(){
-        for(String director: dirMovieMap.keySet()){
-            List<String> movieList=dirMovieMap.get(director);
-            for(String movie:movieList) movieMap.remove(movie);
-
+        ArrayList<String> list=new ArrayList<>();
+        for(String s:pair.keySet())
+        {
+            for(String m:pair.get(s))
+                list.add(m);
         }
-        return "Deleted all directors and their movies";
-    }
+        for(String i:list)
+            movies.remove(i);
 
+        return  "SUCCESSFULLY DELETED ALL DIRECTORS";
+    }
+    public List getMoviesByDirectorName(String dirName){
+        List<String> movieNames=new ArrayList<>();
+        if(pair.containsKey(dirName))
+            movieNames=(pair.get(dirName));
+
+        return movieNames;
+    }
 }

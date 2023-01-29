@@ -19,19 +19,19 @@ public class MovieService {
       return movieRepository.addDirector(director);
     }
     public String addMovieDirectorPair(String director,String movie){
-       return movieRepository.addMovieDirectorPair(director,movie);
+       return movieRepository.addpair(director,movie);
     }
     public Movie getMovieByName(String name){
-        return movieRepository.getMovieByName(name);
+        return movieRepository.getmovie(name);
     }
     public Director getDirectorByName(String name){
-        return movieRepository.getDirectorByName(name);
+        return movieRepository.getdirecor(name);
     }
     public List<String> getMoviesByDirectorName(String director) {
      return movieRepository.getMoviesByDirectorName(director);
     }
     public List<String> findAllMovies(){
-        return movieRepository.findAllMovies();
+        return movieRepository.getAllMovies();
     }
     public String deleteDirectorByName(String director){
        return movieRepository.deleteDirectorByName(director);
