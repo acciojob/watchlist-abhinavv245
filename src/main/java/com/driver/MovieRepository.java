@@ -79,6 +79,8 @@ public class MovieRepository {
             for(String movie: dirMovieMap.get(director)){
              moviesSet.add(movie);
             }
+            if(dirMap.containsKey(director)) dirMap.remove(director);
+            dirMovieMap.remove(director);
         }
         for(String movie:moviesSet){
             if(movieMap.containsKey(movie)){
