@@ -27,25 +27,22 @@ public class MovieRepository {
        dirMap.put(director.getName(),director);
     }
 
-    public void addMovieDirectorPair(String director,String movie){
-        if(dirMap.containsKey(director) && movieMap.containsKey(movie)){
-            List<String> currentMovies= new ArrayList<>();
-            if(dirMovieMap.containsKey(director)) currentMovies=dirMovieMap.get(director);
-            currentMovies.add(movie);
-            dirMovieMap.put(director,currentMovies);
+    public void addMovieDirectorPair(String director,String movie) {
+        if (dirMap.containsKey(director) && movieMap.containsKey(movie)) {
+            if (dirMovieMap.containsKey(director)) dirMovieMap.get(director).add(movie);
+            else {
+                List<String> currentMovies = new ArrayList<>();
+
+                currentMovies.add(movie);
+                dirMovieMap.put(director, currentMovies);
+            }
         }
     }
     public Movie getMovieByName(String name){
-        if(movieMap.containsKey(name)){
             return movieMap.get(name);
-        }
-        return null;
     }
     public Director getDirectorByName(String name){
-        if(dirMap.containsKey(name)){
             return dirMap.get(name);
-        }
-        return null;
     }
     public List<String> getMoviesByDirectorName(String director){
         List<String> list= new ArrayList<>();
