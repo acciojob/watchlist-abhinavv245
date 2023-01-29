@@ -16,14 +16,16 @@ public class MovieRepository {
 
 
 
-    public void addMovie(Movie movie){
+    public String addMovie(Movie movie){
         movieMap.put(movie.getName(),movie);
+        return "Successfully added movie";
     }
-    public void addDirector(Director director){
+    public String addDirector(Director director){
        dirMap.put(director.getName(),director);
+       return "Successfully added director";
     }
 
-    public void addMovieDirectorPair(String director,String movie) {
+    public String addMovieDirectorPair(String director,String movie) {
         if (dirMap.containsKey(director) && movieMap.containsKey(movie)) {
             if (dirMovieMap.containsKey(director)) dirMovieMap.get(director).add(movie);
             else {
@@ -33,6 +35,7 @@ public class MovieRepository {
                 dirMovieMap.put(director, currentMovies);
             }
         }
+        return "Successfully added pair";
     }
     public Movie getMovieByName(String name){
             return movieMap.get(name);
@@ -49,7 +52,7 @@ public class MovieRepository {
         return new ArrayList<>(movieMap.keySet());
     }
 
-    public void deleteDirectorByName(String director){
+    public String deleteDirectorByName(String director){
         if(dirMap.containsKey(director)) {
 
             if (dirMovieMap.containsKey(director)) {
@@ -60,9 +63,11 @@ public class MovieRepository {
                 dirMovieMap.remove(director);
             }
             dirMap.remove(director);
+            return "Successfully deleted";
         }
+        return null;
     }
-    public void deleteAllDirectors(){
+    public String deleteAllDirectors(){
         ArrayList<String> list=new ArrayList<>();
         for(String director: dirMovieMap.keySet()){
             list.addAll(dirMovieMap.get(director));
@@ -70,6 +75,7 @@ public class MovieRepository {
         for(String movie:list){
                 movieMap.remove(movie);
         }
+        return "Deleted all directors";
     }
 
 }

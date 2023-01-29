@@ -14,21 +14,21 @@ public class MovieController {
 
     @PostMapping("/movies/add-movie")
     public ResponseEntity<String> addMovie(@RequestBody Movie movie){
-        movieService.addMovie(movie);
-       return new ResponseEntity<>("Movie added successfully", HttpStatus.CREATED);
+      String response=  movieService.addMovie(movie);
+       return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
 
     @PostMapping("/movies/add-director")
     public ResponseEntity<String> addDirector(@RequestBody Director director){
-        movieService.addDirector(director);
-            return new ResponseEntity<>("Director added successfully", HttpStatus.CREATED);
+       String response= movieService.addDirector(director);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
 
     }
     @PutMapping("/movies/add-movie-director-pair")
     public ResponseEntity<String> addMovieDirectorPair(@RequestParam("director") String director,@RequestParam ("movie") String movie){
-     movieService.addMovieDirectorPair(director,movie);
-     return new ResponseEntity<>("Director Movie Pair added",HttpStatus.CREATED);
+     String response=movieService.addMovieDirectorPair(director,movie);
+     return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 
     @GetMapping("/movies/get-movie-by-name/{name}")
@@ -56,12 +56,12 @@ public class MovieController {
     }
     @DeleteMapping("/movies/delete-director-by-name")
     public ResponseEntity<String> deleteDirectorByName(@RequestParam("director") String director){
-        movieService.deleteDirectorByName(director);
-     return new ResponseEntity<>(director +" deleted successfully",HttpStatus.CREATED);
+      String response=  movieService.deleteDirectorByName(director);
+     return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
     @DeleteMapping("/movies/delete-all-directors")
     public ResponseEntity<String> deleteAllDirectors(){
-        movieService.deleteAllDirectors();
-    return new ResponseEntity<>("Deleted all directors",HttpStatus.CREATED);
+     String response=   movieService.deleteAllDirectors();
+    return new ResponseEntity<>(response,HttpStatus.CREATED);
     }
 }
