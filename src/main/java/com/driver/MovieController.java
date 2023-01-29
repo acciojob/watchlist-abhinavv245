@@ -61,7 +61,7 @@ public class MovieController {
     }
     @DeleteMapping("/movies/delete-all-directors")
     public ResponseEntity<String> deleteAllDirectors(){
-     String response=   movieService.deleteAllDirectors();
-    return new ResponseEntity<>(response,HttpStatus.CREATED);
+     String response= movieService.deleteAllDirectors();
+    return new ResponseEntity<>(response,HttpStatus.OK);
     }
 }

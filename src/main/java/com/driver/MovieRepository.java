@@ -34,8 +34,9 @@ public class MovieRepository {
                 currentMovies.add(movie);
                 dirMovieMap.put(director, currentMovies);
             }
+            return "Successfully added pair";
         }
-        return "Successfully added pair";
+       return "Movie or Director does not exist";
     }
     public Movie getMovieByName(String name){
             return movieMap.get(name);
@@ -68,14 +69,12 @@ public class MovieRepository {
         return null;
     }
     public String deleteAllDirectors(){
-        ArrayList<String> list=new ArrayList<>();
         for(String director: dirMovieMap.keySet()){
-            list.addAll(dirMovieMap.get(director));
+            List<String> movieList=dirMovieMap.get(director);
+            for(String movie:movieList) movieMap.remove(movie);
+
         }
-        for(String movie:list){
-                movieMap.remove(movie);
-        }
-        return "Deleted all directors";
+        return "Deleted all directors and their movies";
     }
 
 }
